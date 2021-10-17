@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { getAll } from "./api/productAPI";
+import Routes from "./Routes";
+export default function App() {
 
-function App() {
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    console.log(1)
+
+    getAll().then((response) => {
+      setProducts(response.data);
+      console.log("res", response)
+    });
+
+  }, []);
+
+  const onHandleAdd = (product) => {
+    setProducts([...products, product]);
+  };
+  const onHandleDelete = (id) => {
+    const newProducts = products.filter((product) => product.id !== id);
+    setProducts(newProducts);
+  };
+  const onHandleUpdate = (product) => {
+    const newProducts = products.map((item) =>
+      item.id === product.id ? product : item
+    );
+    setProducts(newProducts);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes
+        products={products}
+        onAdd={onHandleAdd}
+        onDelete={onHandleDelete}
+        onUpdate={onHandleUpdate}
+      />
     </div>
   );
 }
-
-export default App;
