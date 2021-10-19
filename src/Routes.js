@@ -5,7 +5,6 @@ import {
     NavLink
 } from "react-router-dom";
 import AddProduct from "./Add";
-import Edit from "./Edit";
 import Home from "./Home";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
@@ -58,6 +57,9 @@ const Routes = (props) => {
                 </Route>
                 <Route path="/product">
                     <Product {...props} />
+                </Route>
+                <Route>
+                    <AddProduct {...props}/>
                 </Route>
                 <Route path="/signup" component={Signup} />
                 <Route path="/signin" component={Signin} />
